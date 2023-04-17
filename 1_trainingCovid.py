@@ -81,17 +81,17 @@ df_covid = pd.read_sql_query(sql, conn)
 # conn.close()
 
 # Mortalidad baja
-df_covid.loc[df_covid['l10muertes.permil'] <= 1, 'mortalidad'] = 0
+df_covid.loc[df_covid['l10muertespermil'] <= 1, 'mortalidad'] = 0
 
 # Mortalidad alta
-df_covid.loc[df_covid['l10muertes.permil'] > 1, 'mortalidad'] = 1
+df_covid.loc[df_covid['l10muertespermil'] > 1, 'mortalidad'] = 1
 
 # Se calcula el logarimo base 10 de los casos por millon habitantes, asi evitamos posibles outliers 
-df_covid['l10casos.permil'] = np.log10( 1 + df_covid['casos.permil'])
+df_covid['l10casospermil'] = np.log10( 1 + df_covid['casospermil'])
 
 # This should be a query from a database
 # Eliminamos la variable target de X como asi tambien aquellas que tienen valores de muerte 
-X = df_covid.drop(['mortalidad','l10muertes.permil','muertes.permil','muertes','cntrname','geoid','bcgf'], axis = 1)
+X = df_covid.drop(['mortalidad','l10muertespermil','muertespermil','muertes','cntrname','geoid','bcgf'], axis = 1)
 y = df_covid['mortalidad']
 
 # # Usando el autolog muchas metricas se guardan solas...
